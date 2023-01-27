@@ -1,7 +1,6 @@
 package com.cydeo.service.impl;
 
-import com.cydeo.client.CountryApiClient;
-import com.cydeo.client.WeatherApiClient;
+
 import com.cydeo.dto.AddressDTO;
 import com.cydeo.dto.weather.WeatherDTO;
 import com.cydeo.entity.Address;
@@ -22,14 +21,13 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final MapperUtil mapperUtil;
-    private final WeatherApiClient weatherApiClient;
-    private final CountryApiClient countryApiClient;
+//    private final WeatherApiClient weatherApiClient;
+//    private final CountryApiClient countryApiClient;
 
-    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil, WeatherApiClient weatherApiClient, CountryApiClient countryApiClient) {
+
+    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil) {
         this.addressRepository = addressRepository;
         this.mapperUtil = mapperUtil;
-        this.weatherApiClient = weatherApiClient;
-        this.countryApiClient = countryApiClient;
     }
 
     @Override
@@ -42,21 +40,26 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO findById(Long id) throws Exception {
-        Address foundAddress = addressRepository.findById(id)
-                .orElseThrow(() -> new Exception("No Address Found!"));
-
-        AddressDTO addressDTO = mapperUtil.convert(foundAddress, new AddressDTO());
-        //we will get the current temperature and set based on city, and return dto
-        //getCurrentWeather(city)
-        addressDTO.setCurrentTemperature(getCurrentWeather(addressDTO.getCity()).getCurrent().getTemperature());
-        //we will get the flag link based on the country provided
-        addressDTO.setFlag(getCountryFlag(addressDTO.getCountry()));
-        return addressDTO;
+        return null;
     }
 
-    private String getCountryFlag(String country) {
-      return countryApiClient.getCountryFlag(country).get(0).getFlags().getPng();
-    }
+    // @Override
+//   public AddressDTO findById(Long id) throws Exception {
+//        Address foundAddress = addressRepository.findById(id)
+//                .orElseThrow(() -> new Exception("No Address Found!"));
+//
+//        AddressDTO addressDTO = mapperUtil.convert(foundAddress, new AddressDTO());
+//        //we will get the current temperature and set based on city, and return dto
+//        //getCurrentWeather(city)
+//        addressDTO.setCurrentTemperature(getCurrentWeather(addressDTO.getCity()).getCurrent().getTemperature());
+//        //we will get the flag link based on the country provided
+//        addressDTO.setFlag(getCountryFlag(addressDTO.getCountry()));
+//        return addressDTO;
+//    }
+//
+//   // private String getCountryFlag(String country) {
+//      return countryApiClient.getCountryFlag(country).get(0).getFlags().getPng();
+//    }
 
     @Override
     public AddressDTO update(AddressDTO addressDTO) throws Exception {
@@ -89,10 +92,10 @@ public class AddressServiceImpl implements AddressService {
 
     }
 
-    private WeatherDTO getCurrentWeather(String city){
-
-        return weatherApiClient.getCurrentWeather(accessKey,city);
-
-    }
+//   // private WeatherDTO getCurrentWeather(String city){
+//
+//        return weatherApiClient.getCurrentWeather(accessKey,city);
+//
+//    }
 
 }
