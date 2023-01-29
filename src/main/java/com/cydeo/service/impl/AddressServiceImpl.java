@@ -38,12 +38,9 @@ public class AddressServiceImpl implements AddressService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public AddressDTO findById(Long id) throws Exception {
-        return null;
-    }
 
-    // @Override
+
+//     @Override
 //   public AddressDTO findById(Long id) throws Exception {
 //        Address foundAddress = addressRepository.findById(id)
 //                .orElseThrow(() -> new Exception("No Address Found!"));
@@ -97,5 +94,12 @@ public class AddressServiceImpl implements AddressService {
 //        return weatherApiClient.getCurrentWeather(accessKey,city);
 //
 //    }
+@Override
+       public AddressDTO findById(Long id) throws Exception {
+    Address foundAddress = addressRepository.findById(id)
+            .orElseThrow(() -> new Exception("No Address Found!"));
+    AddressDTO addressDTO = mapperUtil.convert(foundAddress, new AddressDTO());
+    return addressDTO;
+    }
 
 }
